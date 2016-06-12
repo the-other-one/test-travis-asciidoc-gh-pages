@@ -203,7 +203,8 @@ githubPages {
   }
 
   pages {
-    from file(asciidoctor.outputDir.path + '/html5')
+    from file("${asciidoctor.outputDir.path}/html5")
+    from file('doc/CNAME')
   }
 }
 
