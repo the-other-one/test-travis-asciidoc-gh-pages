@@ -15,4 +15,4 @@ cache:
     - $HOME/.gradle
 
 script:
-  - '[ "${TRAVIS_PULL_REQUEST}" = "true" ] && ./gradlew build asciidoc || ./gradlew build asciidoc publishGhPages'
+  - ./travis.build.sh
