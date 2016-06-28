@@ -205,6 +205,10 @@ githubPages {
   pages {
     from file("${asciidoctor.outputDir.path}/html5")
     from file('doc/CNAME')
+    if(!Boolean.valueOf(jfxgaugeReleaseBuild)) {
+      into "snapshots/$jfxgaugeVersion"
+      into "snapshots/latest"
+    }
   }
 }
 
