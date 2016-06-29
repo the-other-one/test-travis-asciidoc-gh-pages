@@ -203,11 +203,19 @@ githubPages {
   }
 
   pages {
-    from file("${asciidoctor.outputDir.path}/html5")
-    from file('doc/CNAME')
+    def pgType = project.hasProperty('ghPageType') ? ghPageType : 'latest'
+    if(pgType == 'init') {
+      from file('doc/CNAME')
+      from file('doc/index.html')
+    } else {
+      from file("${asciidoctor.outputDir.path}/html5")
+    }
     def docDir = Boolean.valueOf(jfxgaugeReleaseBuild) ? 'releases' : 'snapshots'
-    if (project.hasProperty('versionedGhPage')) {
-        into "$docDir/$jfxgaugeVersion"
+
+    if(pgType == 'init') {
+      into "."
+    } else if(pgType == 'version') {
+      into "$docDir/$jfxgaugeVersion"
     } else {
       into "$docDir/latest"
     }
