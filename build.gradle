@@ -205,16 +205,11 @@ githubPages {
   pages {
     from file("${asciidoctor.outputDir.path}/html5")
     from file('doc/CNAME')
-    if(Boolean.valueOf(jfxgaugeReleaseBuild)) {
-      if (project.hasProperty('versionedGhPage')) {
-          into "releases/$jfxgaugeVersion"
-      }
+    def docDir = Boolean.valueOf(jfxgaugeReleaseBuild) ? 'releases' : 'snapshots'
+    if (project.hasProperty('versionedGhPage')) {
+        into "$docDir/$jfxgaugeVersion"
     } else {
-      if (project.hasProperty('versionedGhPage')) {
-        into "snapshots/$jfxgaugeVersion"
-      } else {
-        into "snapshots/latest"
-      }
+      into "$docDir/latest"
     }
   }
 }
