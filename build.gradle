@@ -205,8 +205,7 @@ githubPages {
   pages {
     def pgType = project.hasProperty('ghPageType') ? ghPageType : 'latest'
     if(pgType == 'init') {
-      from file('doc/CNAME')
-      from file('doc/index.html')
+      from file('ghpages')
     } else {
       from file("${asciidoctor.outputDir.path}/html5")
     }
