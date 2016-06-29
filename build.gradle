@@ -210,9 +210,8 @@ githubPages {
       from file("${asciidoctor.outputDir.path}/html5")
     }
     def docDir = Boolean.valueOf(jfxgaugeReleaseBuild) ? 'releases' : 'snapshots'
-
     if(pgType == 'init') {
-      into "."
+      // nothing to configure
     } else if(pgType == 'version') {
       into "$docDir/$jfxgaugeVersion"
     } else {
