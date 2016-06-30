@@ -5,8 +5,9 @@ echo asciidoc started
 echo asciidoc finished
 
 if [ "${TRAVIS_PULL_REQUEST}" = "false" -a "${TRAVIS_BRANCH}" = "master" ]; then
+  echo git show-ref started
   git show-ref --verify --quiet refs/heads/gh-pages
-  if [ $? -ne 0 ]; then
+  if [ "$?" != "0" ]; then
     echo publishGhPages init started
     ./gradlew publishGhPages --rerun-tasks -PghPageType=init
     echo publishGhPages init finished
