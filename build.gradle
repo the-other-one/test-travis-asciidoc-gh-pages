@@ -214,7 +214,7 @@ githubPages {
     }
     def docDir = Boolean.valueOf(jfxgaugeReleaseBuild) ? 'releases' : 'snapshots'
     if(pgType == 'init') {
-      // nothing to configure
+      into "."
     } else if(pgType == 'version') {
       into "$docDir/$jfxgaugeVersion"
     } else {
