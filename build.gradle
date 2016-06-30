@@ -223,14 +223,6 @@ githubPages {
   }
 }
 
-githubPages {
-  pages.metaClass.getRelativeDestinationDir = {
-    destPath ?: new File('.')
-  }
-  ...
-}
-
-
 publishing {
     publications {
         jfxgauge(MavenPublication) {
