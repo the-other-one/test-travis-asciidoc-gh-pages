@@ -195,6 +195,9 @@ asciidoctor {
              linkcss: true
 }
 githubPages {
+  pages.metaClass.getRelativeDestinationDir = {
+    destPath ?: new File('.')
+  }
   repoUri = 'https://github.com/sandboxx/test-travis-asciidoc-gh-pages.git'
 
   credentials {
@@ -205,7 +208,7 @@ githubPages {
   pages {
     def pgType = project.hasProperty('ghPageType') ? ghPageType : 'latest'
     if(pgType == 'init') {
-      from file('ghpages')
+      from file("ghpages")
     } else {
       from file("${asciidoctor.outputDir.path}/html5")
     }
@@ -219,6 +222,14 @@ githubPages {
     }
   }
 }
+
+githubPages {
+  pages.metaClass.getRelativeDestinationDir = {
+    destPath ?: new File('.')
+  }
+  ...
+}
+
 
 publishing {
     publications {
