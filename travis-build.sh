@@ -4,7 +4,7 @@ echo asciidoc started
 ./gradlew build asciidoc
 echo asciidoc finished
 
-if [ "${TRAVIS_PULL_REQUEST}" = "false" -a "${TRAVIS_BRANCH}" = "master" ]; then
+if [ "${TRAVIS_PULL_REQUEST}" == "false" -a "${TRAVIS_BRANCH}" == "master" ]; then
   echo git show-ref started
   git show-ref --verify --quiet refs/heads/gh-pages
   if [ "$?" != "0" ]; then
