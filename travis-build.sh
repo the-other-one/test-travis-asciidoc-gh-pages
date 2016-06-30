@@ -8,7 +8,7 @@ if [ "${TRAVIS_PULL_REQUEST}" == "false" -a "${TRAVIS_BRANCH}" == "master" ]; th
   echo git show-ref started
   set exists = `git show-ref refs/heads/gh-pages`
   echo exists: @$exists@
-  if [ -n "$exists" ]; then
+  if [ -n $exists ]; then
     echo gh-pages branch does not exist
     ./gradlew publishGhPages --rerun-tasks -PghPageType=init
     echo publishGhPages init finished
