@@ -3,7 +3,9 @@ set -ev
 ./gradlew build asciidoc
 
 if [ "${TRAVIS_PULL_REQUEST}" == "false" -a "${TRAVIS_BRANCH}" == "master" ]; then
-  set exists = `git show-ref refs/heads/gh-pages`
+  git show-ref
+  set exists = `git ls-remote origin gh-pages`
+  echo exists: "$exists"
   if [ "$exists" == "" ]; then
     echo Branch gh-pages does not exists.
     ./gradlew publishGhPages --rerun-tasks -PghPageType=init
