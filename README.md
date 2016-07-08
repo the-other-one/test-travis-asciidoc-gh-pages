@@ -17,11 +17,11 @@ and the following template:
 ```
 {{def 'fifteenYear' (math birthYear '+' 15)}}
 {{#ifb (or
-        (and
+          (and
             (compare (math fifteenYear '%' 4) '==' 0)
             (compare (math fifteenYear '%' 100) '!=' 0)
-        )
-        (compare (math fifteenYear '%' 400) '==' 0)
+          )
+          (compare (math fifteenYear '%' 400) '==' 0)
        )
 }}
 Your fifteenth anniversary was in a leap year!
