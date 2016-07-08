@@ -9,12 +9,12 @@ This allows writing the template logic in a fluent way.
 **Example**
 
 Given the following YAML model:
-```yaml
+```
 birthYear: 1997
 ```
 and the following template:
 
-```hbs
+```
 {{def 'fifteenYear' (math birthYear '+' 15)}}
 {{#ifb (or
         (and
