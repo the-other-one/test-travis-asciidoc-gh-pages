@@ -1,13 +1,39 @@
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/beryx/jfxgauge/blob/master/LICENSE)
-[![Build Status](https://img.shields.io/travis/beryx/jfxgauge/master.svg?label=Build)](https://travis-ci.org/beryx/jfxgauge)
-## JFXGauge ##
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/beryx/handlebars-java-helpers/blob/master/LICENSE)
+[![Build Status](https://img.shields.io/travis/beryx/handlebars-java-helpers/master.svg?label=Build)](https://travis-ci.org/beryx/handlebars-java-helpers)
+## Handlebars.java Helpers ##
 
-A JavaFX gauge currently providing a thermometer and a text skin.
+This library provides various helpers for adding logic to [Handlebars.java](https://github.com/jknack/handlebars.java).
+Most of them are basic helpers that can be used as subexpressions in the built-in block helpers of Handlebars.java.
+This allows writing the template logic in a fluent way.
+
+**Example**
+
+Given the following YAML model:
+```
+birthYear: 1997
+```
+and the following template:
+
+```
+{{def 'fifteenYear' (math birthYear '+' 15)}}
+{{#ifb (or
+          (and
+            (compare (math fifteenYear '%' 4) '==' 0)
+            (compare (math fifteenYear '%' 100) '!=' 0)
+          )
+          (compare (math fifteenYear '%' 400) '==' 0)
+       )
+}}
+Your fifteenth anniversary was in a leap year!
+{{else}}
+Your fifteenth anniversary was in a non-leap year!
+{{/ifb}}
+```
+The resulting text will be:
+```
+Your fifteenth anniversary was in a leap year!
+```
 
 
-Thermometer Skin |Text Skin
------------------|----------
-<a href="https://github.com/beryx/jfxgauge/raw/master/doc/img/thermoDemo.gif"><img src="https://github.com/beryx/jfxgauge/raw/master/doc/img/thermoDemo-thumbnail.gif"></a> | <a href="https://github.com/beryx/jfxgauge/raw/master/doc/img/textDemo.gif"><img src="https://github.com/beryx/jfxgauge/raw/master/doc/img/textDemo-thumbnail.gif"></a>
 
-
-Try the demo application included in the [release](https://github.com/beryx/jfxgauge/releases/latest), read the [documentation](http://jfxgauge.beryx.org) and use JFXGauge in your projects!
+Please read the **[documentation](http://handlebars-java-helpers.beryx.org)** before using the handlebars-java-helpers library.
