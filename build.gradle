@@ -1,18 +1,6 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 import org.gradle.plugins.signing.Sign
 
-buildscript {
-    repositories {
-        mavenCentral()
-        maven {
-            url 'http://iordache.com/repo'
-        }
-    }
-    dependencies {
-        classpath 'org.ajoberstar:gradle-git:99.6.0-rc.1'
-    }
-}
-
 plugins {
     id 'idea'
     id 'maven-publish'
@@ -20,12 +8,11 @@ plugins {
     id "com.github.ben-manes.versions" version "0.13.0"
     id "com.jfrog.bintray" version "1.7.1"
     id "org.asciidoctor.convert" version "1.5.3"
-    // id 'org.ajoberstar.github-pages' version '1.6.0-rc.1'
+    id 'org.ajoberstar.github-pages' version '1.6.0-rc.1'
     id "com.github.hierynomus.license" version "0.13.1"
     id "net.saliman.properties" version "1.4.5"
     id 'com.github.jk1.dependency-license-report' version '0.3.5'
 }
-apply plugin: "org.ajoberstar.github-pages"
 
 project.version.with {
     major = streamplifyVersionMajor as int
@@ -237,14 +224,10 @@ githubPages {
   credentials {
     username = System.getenv('GH_PAGES_ACCESS_TOKEN')
     password = ''
-    logger.info("username: ${username?.size()}; password: ${password != null}")
   }
 
   pages {
-    System.properties['org.ajoberstar.grgit.auth.hardcoded.allow'] = 'true'
     def pgType = project.hasProperty('ghPageType') ? ghPageType : 'latest'
-    logger.info("publishGhPages: ghType = $pgType")
-    logger.info("org.ajoberstar.grgit.auth.hardcoded.allow = ${System.properties['org.ajoberstar.grgit.auth.hardcoded.allow']}")
     if(pgType == 'init') {
       from file("ghpages")
     } else {
@@ -256,7 +239,6 @@ githubPages {
       into "."
     } else if(pgType == 'version') {
       publishGhPages.enabled = (docDir != 'snapshots')
-      logger.info("pgType = version; enabled = $publishGhPages.enabled")
       into "$docDir/$streamplifyVersion"
     } else {
       into "$docDir/latest"
