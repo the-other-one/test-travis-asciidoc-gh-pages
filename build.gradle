@@ -226,7 +226,7 @@ asciidoctor {
              linkcss: true
 }
 
-task deleteGHPagesRepo(type: Delete)) {
+task deleteGHPagesRepo(type: Delete) {
    delete "${project.buildDir}/ghpages"
 }
 publishGhPages.dependsOn deleteGHPagesRepo
