@@ -223,8 +223,10 @@ githubPages {
   }
 
   pages {
+    System.properties['org.ajoberstar.grgit.auth.hardcoded.allow'] = 'true'
     def pgType = project.hasProperty('ghPageType') ? ghPageType : 'latest'
     logger.info("publishGhPages: ghType = $pgType")
+    logger.info("org.ajoberstar.grgit.auth.hardcoded.allow = ${System.properties['org.ajoberstar.grgit.auth.hardcoded.allow']}")
     if(pgType == 'init') {
       from file("ghpages")
     } else {
