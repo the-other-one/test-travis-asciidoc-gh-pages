@@ -28,3 +28,9 @@ System.out.println(new Permutations(10)
 
 
 Please read the **[documentation](http://streamplify.beryx.org)** and the javadoc.
+
+**Contribute to this project!**
+
+We welcome all kind of contributions and there are many ways in which you can help this project.
+
+Read the **[how to contribute](CONTRIBUTING.md)** and jump in!

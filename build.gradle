@@ -223,6 +223,7 @@ githubPages {
 
   pages {
     def pgType = project.hasProperty('ghPageType') ? ghPageType : 'latest'
+    logger.info("publishGhPages: ghType = $pgType")
     if(pgType == 'init') {
       from file("ghpages")
     } else {
