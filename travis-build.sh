@@ -1,6 +1,6 @@
 #!/bin/bash
 set -ev
-./gradlew --no-daemon build asciidoc
+./gradlew --no-daemon build javadoc asciidoc
 
 if [ "${TRAVIS_PULL_REQUEST}" == "false" -a "${TRAVIS_BRANCH}" == "master" ]; then
   if [ "`git ls-remote origin gh-pages`" == "" ]; then
