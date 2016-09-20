@@ -3,12 +3,12 @@
 ## Streamplify ##
 
 
-The goal of this library is to provide and to help building Java 8 streams that allow efficient parallel processing.
+The goal of this library is to provide useful Java 8 streams and to assist you in building new streams that allow efficient parallel processing.
 
 The utilities offered by Streamplify include:
 
 - combinatorics streams: permutations, combinations, cartesian product etc.
-- classes that help you implement your own efficient streams.
+- classes that help you implement your own efficient parallel streams.
 
 **Example**
 ```
