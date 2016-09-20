@@ -7,7 +7,7 @@ addons:
     packages:
       - oracle-java8-installer
 
-jdk:
+jdk:  
   - oraclejdk8
 
 cache:

@@ -1,10 +1,9 @@
 [[getting_started]]
 = Getting Started
 
-CAUTION: You need Java 8 update 40 or newer in order to use JFXGauge.
+CAUTION: You need Java 8 or newer in order to use {project-name}.
 
-== Installation
-JFXGauge is available in Maven Central and JCenter.
+{project-name} is available in Maven Central and JCenter.
 
 [subs="attributes",options="nowrap",title="Maven"]
 ----
@@ -19,16 +18,3 @@ JFXGauge is available in Maven Central and JCenter.
 ----
 compile '{project-group}:{project-name}:{project-version}'
 ----
-
-== Demo
-
-Download the https://github.com/beryx/{project-name}/releases/download/v{project-version}/{project-name}-{project-version}.zip[binary distribution] and unzip it into a directory of your choice.
-
-Make sure your JAVA_HOME environment variable correctly points to a JDK 8u40 or later.
-
-Start the demo by executing '{project-name}' or '{project-name}.bat' in the bin directory.
-
-== Usage
-
-A quick and effective way to learn how to use the gauges is to look at https://github.com/beryx/jfxgauge/tree/master/src/main/java/org/beryx/jfxgauge/demo[the source code of the GaugeDemo application^].
-For an in-depth look, read the next sections of this documentation.

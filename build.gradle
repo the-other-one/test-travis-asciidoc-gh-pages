@@ -1,52 +1,29 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 import org.gradle.plugins.signing.Sign
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-      classpath files ('/lib/gradle-git.jar')
-      classpath 'org.ajoberstar:grgit:1.7.0'
-      classpath 'com.github.zafarkhaja:java-semver:0.9.0'
-    }
-}
-
 plugins {
     id 'idea'
     id 'maven-publish'
     id "com.github.ethankhall.semantic-versioning" version "1.1.0"
-    id "com.github.ben-manes.versions" version "0.11.3"
-    id "com.jfrog.bintray" version "1.6"
+    id "com.github.ben-manes.versions" version "0.13.0"
+    id "com.jfrog.bintray" version "1.7.1"
     id "org.asciidoctor.convert" version "1.5.3"
-    //id 'org.ajoberstar.github-pages' version '1.5.1'
-    id "com.github.hierynomus.license" version "0.12.1"
-    id "net.saliman.properties" version "1.4.4"
-    id 'com.gradle.build-receipt' version '1.0'
-    id 'com.github.jk1.dependency-license-report' version '0.3.4'
-    id "com.dorongold.task-tree" version "1.2.1"
-}
-apply plugin: "org.ajoberstar.github-pages"
-
-buildReceiptLicense {
-    agreementUrl = 'https://gradle.com/terms-of-service'
-    agree = 'yes'
+    id 'org.ajoberstar.github-pages' version '1.6.0-rc.1'
+    id "com.github.hierynomus.license" version "0.13.1"
+    id "net.saliman.properties" version "1.4.5"
+    id 'com.github.jk1.dependency-license-report' version '0.3.5'
 }
 
 project.version.with {
-    major = jfxgaugeVersionMajor as int
-    minor= jfxgaugeVersionMinor as int
-    patch = jfxgaugeVersionPatch as int
-    if (project.hasProperty('jfxgaugeVersionLabel')) {
-        preRelease = jfxgaugeVersionLabel
+    major = streamplifyVersionMajor as int
+    minor= streamplifyVersionMinor as int
+    patch = streamplifyVersionPatch as int
+    if (project.hasProperty('streamplifyVersionLabel')) {
+        preRelease = streamplifyVersionLabel
     }
-    releaseBuild = Boolean.valueOf(jfxgaugeReleaseBuild)
+    releaseBuild = Boolean.valueOf(streamplifyReleaseBuild)
 }
-ext.jfxgaugeVersion = project.version as String
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.13'
-}
+ext.streamplifyVersion = project.version as String
 
 repositories {
   jcenter()
@@ -54,144 +31,173 @@ repositories {
 }
 
 def pomConfig = {
-    url "https://github.com/beryx/jfxgauge"
+    url "https://github.com/beryx/streamplify"
     developers {
         developer {
             id "siordache"
             name "Serban Iordache"
-            // email "name@example.com"
         }
     }
     scm {
-        connection "https://github.com/beryx/jfxgauge.git"
-        developerConnection "https://github.com/beryx/jfxgauge.git"
-        url "https://github.com/beryx/jfxgauge.git"
+        connection "https://github.com/beryx/streamplify.git"
+        developerConnection "https://github.com/beryx/streamplify.git"
+        url "https://github.com/beryx/streamplify"
     }
 }
 
-tasks.withType(Javadoc) {
-    options.addStringOption('Xdoclint:all,-syntax,-missing', '-quiet')
+allprojects {
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:all,-syntax,-missing', '-quiet')
+    }
 }
-
-apply plugin: 'application'
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'findbugs'
-apply plugin: 'com.github.ben-manes.versions'
-apply plugin: 'signing'
-apply plugin: 'com.github.hierynomus.license'
-apply plugin: 'com.github.jk1.dependency-license-report'
-
-
-repositories {
-    jcenter()
-    mavenCentral()
-}
-
-sourceCompatibility = 1.8
-group = 'org.beryx.jfxgauge'
-version = jfxgaugeVersion
 
 def defaultEncoding = 'UTF-8'
-[compileJava, compileTestJava]*.options*.encoding = defaultEncoding
 
-configurations {
-  provided
-  compile {transitive = true}
-}
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+    apply plugin: 'findbugs'
+    apply plugin: 'com.github.ben-manes.versions'
+    apply plugin: 'signing'
+    apply plugin: 'com.github.hierynomus.license'
+    apply plugin: 'com.github.jk1.dependency-license-report'
 
-license {
-    header rootProject.file("license-header.txt")
-    skipExistingHeaders true
-    ignoreFailures false
-}
-
-signing {
-    sign configurations.archives
-}
-
-def isPublishTask(task) {
-  task.name.startsWith('publish') && (task.name != 'publishGhPages')
-}
-
-signArchives {
-  onlyIf { gradle.taskGraph.allTasks.findAll {task -> isPublishTask(task)} }
-}
-
-dependencies {
-  compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.20'
-  compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
-  compile 'com.guigarage:css-helper:0.7'
-  provided 'com.google.code.findbugs:findbugs-annotations:3.0.1'
-
-  testCompile 'junit:junit:4.12'
-}
-
-
-mainClassName = 'org.beryx.jfxgauge.demo.GaugeDemo'
-
-applicationName = "jfxgauge"
-
-startScripts {
-    defaultJvmOpts = ['-Dlogback.configurationFile=logback.xml']
-}
-
-applicationDistribution.from("dist") {
-    filter(ReplaceTokens, tokens:[jfxgaugeVersion : jfxgaugeVersion])
-}
-
-applicationDistribution.from(".") {
-    include('LICENSE', 'NOTICE')
-}
-
-sourceSets.main.compileClasspath += configurations.provided
-
-findbugs {
-    effort = "max"
-    excludeFilter = file("findbugsExclude.xml")
-}
-jar {
-    manifest {
-        attributes 'Main-Class': 'org.beryx.jfxgauge.demo.GaugeDemo',
-                   'Implementation-Title': "${project.archivesBaseName}",
-                   'Implementation-Version': jfxgaugeVersion,
-                   'Implementation-Vendor-Id': 'beryx.org'
+    repositories {
+        jcenter()
+        mavenCentral()
     }
 
-    from ("src/main/java") {
-        include('**/*.fxml')
-        include('**/*.css')
-        include('**/*.png')
+    sourceCompatibility = 1.8
+    group = 'org.beryx'
+    version = streamplifyVersion
+
+    [compileJava, compileTestJava]*.options*.encoding = defaultEncoding
+
+    configurations {
+      provided
+      compile {transitive = true}
+    }
+
+    license {
+        header rootProject.file("license-header.txt")
+        skipExistingHeaders true
+        ignoreFailures false
+    }
+
+    signing {
+        sign configurations.archives
+    }
+
+    signArchives {
+      onlyIf { gradle.taskGraph.allTasks.findAll {task -> isPublishTask(task)} }
+    }
+
+    dependencies {
+        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
+        provided 'com.google.code.findbugs:findbugs-annotations:3.0.1'
+    }
+
+    sourceSets.main.compileClasspath += configurations.provided
+
+    findbugs {
+        effort = "max"
+        excludeFilter = file("$rootProject.projectDir/findbugsExclude.xml")
+    }
+
+    jar {
+        manifest {
+            attributes 'Implementation-Title': "${project.archivesBaseName}",
+                    'Implementation-Version': streamplifyVersion,
+                    'Implementation-Vendor-Id': 'beryx.org'
+        }
+    }
+
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    configureJavadoc(javadoc)
+
+    task javadocJar(type: Jar, dependsOn: classes) {
+        classifier "javadoc"
+        from javadoc
+    }
+
+    artifacts {
+        (System.getenv("TRAVIS") == "true") ? archives(sourcesJar) : archives(sourcesJar, javadocJar)
+    }
+
+    task "create-dirs" << {
+       sourceSets*.java.srcDirs*.each { it.mkdirs() }
+
+       sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+    }
+
+
+    ///////////  ECLIPSE  //////////////////
+    def resourcesDir = 'src/main/resources/'
+    eclipse.classpath.file {
+        beforeMerged { classpath ->
+            classpath.entries.removeAll()
+        }
+        whenMerged { classpath ->
+            classpath.entries.findAll { entry -> entry.kind == 'lib' }*.exported = true
+            classpath.entries.removeAll { entry -> entry.kind == 'src' && entry.path.contains('/resources') }
+            classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.SourceFolder(resourcesDir, null))
+            classpath.entries.findAll { entry -> entry.kind == 'con' && entry.path.contains('StandardVMType') }.each { entry ->
+                entry.accessRules.add(new org.gradle.plugins.ide.eclipse.model.AccessRule('accessible', 'javafx/**'))
+            }
+        }
+    }
+
+    eclipse {
+        project {
+            file.beforeMerged { project ->
+                project.natures.clear()
+            }
+        }
+        classpath {
+            plusConfigurations << configurations.provided
+        }
+    }
+
+    /////////////  IDEA  ///////////////////
+    idea {
+      module {
+        scopes.PROVIDED.plus += [configurations.provided]
+      }
     }
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
+def gitIgnore = file(".gitignore").readLines()
+def gitIgnoreDirs = gitIgnore*.trim().findAll { !it.startsWith("#") && it.endsWith("/") }
 
-
-configureJavadoc(javadoc)
-
-def configureJavadoc(task) {
-  configure(task) {
-    if(project.configurations.hasProperty('provided')) {
-        classpath += project.configurations.provided
+idea {
+  module {
+    outputFile = file("streamplify.iml")
+  }
+  project {
+    languageLevel = "1.8"
+    outputFile = file('streamplify.ipr')
+    ipr {
+      withXml { provider ->
+        def vcsDirMap = provider.node.component.find { it.@name == 'VcsDirectoryMappings' }
+        if(vcsDirMap) {
+          vcsDirMap.mapping.@directory = '$PROJECT_DIR$/..'
+          vcsDirMap.mapping.@vcs = 'Git'
+        }
+      }
     }
-    configure(options) {
-      links "http://docs.oracle.com/javase/8/docs/api/"
+    configure(modules) { module ->
+      excludeDirs = module.project.files(gitIgnoreDirs) as Set
     }
   }
 }
 
-task javadocJar(type: Jar, dependsOn: classes) {
-  classifier "javadoc"
-  from javadoc
-}
-
-artifacts {
-    archives sourcesJar, javadocJar
+ideaWorkspace {
+  outputFile = file('streamplify.iws')
 }
 
 asciidoctor {
@@ -206,8 +212,9 @@ asciidoctor {
              linkattrs: true,
              linkcss: true
 }
+
 githubPages {
-  repoUri = 'https://github.com/sandboxx/test-travis-asciidoc-gh-pages.git'
+  repoUri = 'https://github.com/beryx/streamplify.git'
 
   credentials {
     username = System.getenv('GH_PAGES_ACCESS_TOKEN')
@@ -220,111 +227,89 @@ githubPages {
       from file("ghpages")
     } else {
       from file("${asciidoctor.outputDir.path}/html5")
+      from file("streamplify/build/docs")
     }
-    def docDir = Boolean.valueOf(jfxgaugeReleaseBuild) ? 'releases' : 'snapshots'
+    def docDir = Boolean.valueOf(streamplifyReleaseBuild) ? 'releases' : 'snapshots'
     if(pgType == 'init') {
       into "."
     } else if(pgType == 'version') {
       publishGhPages.enabled = (docDir != 'snapshots')
-      into "$docDir/$jfxgaugeVersion"
+      into "$docDir/$streamplifyVersion"
     } else {
       into "$docDir/latest"
     }
   }
+
 }
 
-publishing {
-    publications {
-        jfxgauge(MavenPublication) {
-            from components.java
-            artifact sourcesJar { classifier "sources" }
-            artifact javadocJar { classifier "javadoc" }
-            groupId 'org.beryx.jfxgauge'
-            artifactId "jfxgauge"
-            version jfxgaugeVersion
-            pom.withXml {
-                def root = asNode()
-                root.appendNode('name', "jfxgauge")
-                root.appendNode('description', "The JFXGauge artifact")
-                root.children().last() + pomConfig
+project('streamplify') {
+    apply plugin: 'groovy'
 
-                // We cannot configure the licenses in pomConfig due to a name conflict with the 'license' extension defined by the com.github.hierynomus.license plugin
-                def licenseNode = root.appendNode('licenses').appendNode('license')
-                licenseNode.appendNode('name', 'The Apache Software License, Version 2.0')
-                licenseNode.appendNode('url', 'http://www.apache.org/licenses/LICENSE-2.0.txt')
-                licenseNode.appendNode('distribution', 'repo')
+    [compileGroovy, compileTestGroovy]*.options*.encoding = defaultEncoding
+    [compileGroovy, compileTestGroovy]*.groovyOptions*.encoding = defaultEncoding
+
+    dependencies {
+        testCompile "org.codehaus.groovy:groovy-all:2.4.7"
+        testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
+        testCompile('org.spockframework:spock-core:1.1-groovy-2.4-rc-2') {
+          exclude module: 'groovy-all'
+        }
+        testCompile 'cglib:cglib-nodep:3.2.4'
+        testCompile 'org.objenesis:objenesis:2.4'
+        testCompile('com.athaydes:spock-reports:1.2.12') { transitive = false}
+    }
+
+    publishing {
+        publications {
+            "$project.name"(MavenPublication) {
+                from components.java
+                artifact sourcesJar { classifier "sources" }
+                artifact javadocJar { classifier "javadoc" }
+                groupId 'org.beryx'
+                artifactId project.name
+                version streamplifyVersion
+                pom.withXml {
+                    def root = asNode()
+                    root.appendNode('name', "Module $project.name")
+                    root.appendNode('description', "The $project.name artifact")
+                    root.children().last() + pomConfig
+
+                    // We cannot configure the licenses in pomConfig due to a name conflict with the 'license' extension defined by the com.github.hierynomus.license plugin
+                    def licenseNode = root.appendNode('licenses').appendNode('license')
+                    licenseNode.appendNode('name', 'The Apache Software License, Version 2.0')
+                    licenseNode.appendNode('url', 'http://www.apache.org/licenses/LICENSE-2.0.txt')
+                    licenseNode.appendNode('distribution', 'repo')
+                }
             }
         }
     }
 }
 
-task "create-dirs" << {
-   sourceSets*.java.srcDirs*.each { it.mkdirs() }
-   sourceSets*.resources.srcDirs*.each { it.mkdirs() }
-}
-
-
-///////////  ECLIPSE  //////////////////
-def resourcesDir = 'src/main/resources/'
-eclipse.classpath.file {
-    beforeMerged { classpath ->
-        classpath.entries.removeAll()
-    }
-    whenMerged { classpath ->
-        classpath.entries.findAll { entry -> entry.kind == 'lib' }*.exported = true
-        classpath.entries.removeAll { entry -> entry.kind == 'src' && entry.path.contains('/resources') }
-        classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.SourceFolder(resourcesDir, null))
-        classpath.entries.findAll { entry -> entry.kind == 'con' && entry.path.contains('StandardVMType') }.each { entry ->
-            entry.accessRules.add(new org.gradle.plugins.ide.eclipse.model.AccessRule('accessible', 'javafx/**'))
-        }
+project('streamplify-examples') {
+    dependencies {
+        compile project(':streamplify')
+        compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
     }
 }
 
-eclipse {
-    project {
-        file.beforeMerged { project ->
-            project.natures.clear()
-        }
-    }
-    classpath {
-        plusConfigurations << configurations.provided
-    }
+task javadoc(type: Javadoc) {
+    title "Streamplify Documentation ($streamplifyVersion)"
+    destinationDir file("build/javadoc")
+    source subprojects.javadoc.source
+    classpath = files(subprojects.javadoc.classpath)
 }
 
-/////////////  IDEA  ///////////////////
-idea {
-  module {
-    scopes.PROVIDED.plus += [configurations.provided]
-  }
-}
+configureJavadoc(javadoc)
 
-def gitIgnore = file(".gitignore").readLines()
-def gitIgnoreDirs = gitIgnore*.trim().findAll { !it.startsWith("#") && it.endsWith("/") }
-
-idea {
-  module {
-    outputFile = file("jfxgauge.iml")
-  }
-  project {
-    languageLevel = "1.8"
-    outputFile = file('jfxgauge.ipr')
-    ipr {
-      withXml { provider ->
-        def vcsDirMap = provider.node.component.find { it.@name == 'VcsDirectoryMappings' }
-        if(vcsDirMap) {
-          vcsDirMap.mapping.@directory = '$PROJECT_DIR$'
-          vcsDirMap.mapping.@vcs = 'Git'
-        }
+def configureJavadoc(task) {
+  configure(task) {
+      if(project.configurations.hasProperty('provided')) {
+          classpath += project.configurations.provided
       }
-    }
-    configure(modules) { module ->
-      excludeDirs = module.project.files(gitIgnoreDirs) as Set
-    }
+      configure(options) {
+          links "http://docs.oracle.com/javase/6/docs/api/"
+      }
   }
-}
-
-ideaWorkspace {
-  outputFile = file('jfxgauge.iws')
 }
 
 def readFromConsole(prompt) {
@@ -354,35 +339,39 @@ def readFromConsole(header, prompt, isPassword) {
         }
         return value
     } else {
-        throw new GradleException("Cannot get console.")
+        throw new GradleException("Cannot get console. Try running gradle with the '--no-daemon' option")
     }
+}
+
+def isPublishTask(task) {
+  task.name.startsWith('publish') && (task.name != 'publishGhPages')
 }
 
 gradle.taskGraph.whenReady { taskGraph ->
     if (gradle.taskGraph.allTasks.findAll {task -> isPublishTask(task)}) {
         def password = readPasswordFromConsole('Please enter your signing credentials', 'PGP Private Key Password')
-        ext."signing.keyId" = signingKeyId
-        ext."signing.secretKeyRingFile" = signingSecretKeyRingFile
-        ext."signing.password" = password
+        allprojects { ext."signing.keyId" = signingKeyId }
+        allprojects { ext."signing.secretKeyRingFile" = signingSecretKeyRingFile }
+        allprojects { ext."signing.password" = password }
     }
 }
 
 bintray {
     user = project.hasProperty('bintrayUser') ? project.getProperty('bintrayUser') : "unknownUser"
     key =  project.hasProperty('bintrayKey') ? project.getProperty('bintrayKey') : "unknownKey"
-    publications = ["jfxgauge"]
+    publications = subprojects.name
     pkg {
         repo = 'maven'
-        name = 'jfxgauge'
+        name = 'streamplify'
         userOrg = 'beryx'
         licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/beryx/jfxgauge.git'
+        vcsUrl = 'https://github.com/beryx/streamplify.git'
 
         version {
-                name = jfxgaugeVersion
-                desc = "JFXGauge $jfxgaugeVersion"
+                name = streamplifyVersion
+                desc = "Streamplify $streamplifyVersion"
                 released  = new Date().format("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
-                vcsTag = jfxgaugeVersion
+                vcsTag = streamplifyVersion
                 gpg {
                     sign = true
                 }
