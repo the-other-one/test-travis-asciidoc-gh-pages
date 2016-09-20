@@ -226,6 +226,11 @@ asciidoctor {
              linkcss: true
 }
 
+task deleteGHPagesRepo(type: Delete)) {
+   delete "${project.buildDir}/ghpages"
+}
+publishGhPages.dependsOn deleteGHPagesRepo
+
 githubPages {
   repoUri = 'https://github.com/sandboxx/test-travis-asciidoc-gh-pages.git'
 
