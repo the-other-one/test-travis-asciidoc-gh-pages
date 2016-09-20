@@ -219,6 +219,7 @@ githubPages {
   credentials {
     username = System.getenv('GH_PAGES_ACCESS_TOKEN')
     password = ''
+    logger.info("username: ${username?.size()}; password: ${password != null}")
   }
 
   pages {
@@ -235,6 +236,7 @@ githubPages {
       into "."
     } else if(pgType == 'version') {
       publishGhPages.enabled = (docDir != 'snapshots')
+      logger.info("pgType = version; enabled = $publishGhPages.enabled")
       into "$docDir/$streamplifyVersion"
     } else {
       into "$docDir/latest"
