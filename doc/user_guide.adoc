@@ -1,4 +1,6 @@
 [[user_guide]]
 = User Guide
 
+NOTE: The JavaDoc is available link:javadoc/[here].
+
 TBD

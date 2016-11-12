@@ -1,6 +1,0 @@
-String[] modules = [
-    'streamplify',
-    'streamplify-examples',
-]
-
-include modules
