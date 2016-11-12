@@ -29,6 +29,28 @@ It is not capable to mask input strings, therefore not recommended when reading 
 
 == Input Readers
 
+Input readers are able to read values of a specific type.
+They are subclasses of link:javadoc/org/beryx/textio/InputReader.html[InputReader],
+which offers (via _withXXX()_ methods) a fluent interface for configuring various settings such as:
+
+- link:javadoc/org/beryx/textio/InputReader#withInputMasking.html[input masking]
+- link:javadoc/org/beryx/textio/InputReader#with.html[defaultValue]
+- link:javadoc/org/beryx/textio/InputReader#with.html[possible values]
+- link:javadoc/org/beryx/textio/InputReader#with.html[error messages]
+- link:javadoc/org/beryx/textio/InputReader#with.html[property name]
+
+See the link:javadoc/org/beryx/textio/InputReader.html[javadoc] for more configuration methods.
+
+The following concrete implementations are available:
+
+- link:javadoc/org/beryx/textio/BooleanInputReader.html[BooleanInputReader]
+- link:javadoc/org/beryx/textio/DoubleInputReader.html[DoubleInputReader]
+- link:javadoc/org/beryx/textio/EnumInputReader.html[EnumInputReader]
+- link:javadoc/org/beryx/textio/GenericInputReader.html[GenericInputReader]
+- link:javadoc/org/beryx/textio/IntInputReader.html[IntInputReader]
+- link:javadoc/org/beryx/textio/LongInputReader.html[LongInputReader]
+- link:javadoc/org/beryx/textio/StringInputReader.html[StringInputReader]
+
 == TextIO
 
 == TextIoFactory
