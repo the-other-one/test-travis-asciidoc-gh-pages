@@ -46,8 +46,8 @@ def pomConfig = {
         }
     }
     scm {
-        connection "https://github.com/beryx/test-travis-asciidoc-gh-pages.git"
-        developerConnection "https://github.com/beryx/test-travis-asciidoc-gh-pages.git"
+        connection "https://github.com/sandboxx/test-travis-asciidoc-gh-pages.git"
+        developerConnection "https://github.com/sandboxx/test-travis-asciidoc-gh-pages.git"
         url "https://github.com/beryx/text-io"
     }
 }
@@ -216,7 +216,7 @@ asciidoctor {
 }
 
 githubPages {
-  repoUri = 'https://github.com/beryx/test-travis-asciidoc-gh-pages.git'
+  repoUri = 'https://github.com/sandboxx/test-travis-asciidoc-gh-pages.git'
 
   credentials {
     username = System.getenv('GH_PAGES_ACCESS_TOKEN')
@@ -320,7 +320,7 @@ bintray {
         name = 'text-io'
         userOrg = 'beryx'
         licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/beryx/test-travis-asciidoc-gh-pages.git'
+        vcsUrl = 'https://github.com/sandboxx/test-travis-asciidoc-gh-pages.git'
 
         version {
                 name = textIoVersion
