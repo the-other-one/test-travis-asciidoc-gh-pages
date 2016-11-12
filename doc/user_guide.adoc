@@ -30,3 +30,5 @@ It is not capable to mask input strings, therefore not recommended when reading 
 == Input Readers
 
 == TextIO
+
+== TextIoFactory

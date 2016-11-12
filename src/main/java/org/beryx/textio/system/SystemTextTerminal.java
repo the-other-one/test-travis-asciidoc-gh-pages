@@ -21,8 +21,8 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 /**
- * A {@link TextTerminal} backed by {@link System#out} and {@link Scanner}.
- * It is not capable to mask input strings, therefore not recommended for reading passwords.
+ * A {@link TextTerminal} implemented using {@link System#out}, {@link System#in} and {@link Scanner}.
+ * It is not capable to mask input strings, therefore not recommended when reading sensitive data.
  */
 public class SystemTextTerminal implements TextTerminal {
     private final Scanner scanner = new Scanner(System.in);
