@@ -3,4 +3,30 @@
 
 NOTE: The JavaDoc is available link:javadoc/[here].
 
-TBD
+== Text Terminals
+
+A text terminal is an abstraction layer used by the Text-IO library in order to provide device independence.
+Text terminals must implement the
+link:javadoc/org/beryx/textio/TextTerminal.html[TextTerminal]
+interface, which requires to allow at least:
+
+- reading a one-line text.
+- writing a one-line text.
+- writing a line separator.
+
+The following concrete implementations are provided by the Text-IO library:
+
+- link:javadoc/org/beryx/textio/console/ConsoleTextTerminal.html[ConsoleTextTerminal], which is backed by a
+http://docs.oracle.com/javase/8/docs/api/java/io/Console.html[java.io.Console].
+- link:javadoc/org/beryx/textio/swing/SwingTextTerminal.html[SwingTextTerminal], which uses a
+http://docs.oracle.com/javase/8/docs/api/javax/swing/JTextArea.html[JTextArea] inside a
+http://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html[JFrame].
+- link:javadoc/org/beryx/textio/system/SystemTextTerminal.html[SystemTextTerminal], which uses
+http://docs.oracle.com/javase/8/docs/api/java/lang/System.html#out[System.out],
+http://docs.oracle.com/javase/8/docs/api/java/lang/System.html#in[System.in] and
+http://docs.oracle.com/javase/8/docs/api/java/util/Scanner.html[Scanner].
+It is not capable to mask input strings, therefore not recommended when reading sensitive data.
+
+== Input Readers
+
+== TextIO
