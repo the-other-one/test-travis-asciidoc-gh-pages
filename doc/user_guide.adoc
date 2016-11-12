@@ -33,8 +33,8 @@ Input readers are able to read values of a specific type.
 They are subclasses of link:javadoc/org/beryx/textio/InputReader.html[InputReader],
 which offers (via _withXXX()_ methods) a fluent interface for configuring various settings such as:
 
-- link:javadoc/org/beryx/textio/InputReader#withInputMasking.html[input masking]
-- link:javadoc/org/beryx/textio/InputReader#with.html[defaultValue]
+- link:javadoc/org/beryx/textio/InputReader#withInputMasking.html[input masking] - useful when reading sensitive data such as passwords.
+- link:javadoc/org/beryx/textio/InputReader#with.html[defaultValue] -
 - link:javadoc/org/beryx/textio/InputReader#with.html[possible values]
 - link:javadoc/org/beryx/textio/InputReader#with.html[error messages]
 - link:javadoc/org/beryx/textio/InputReader#with.html[property name]
