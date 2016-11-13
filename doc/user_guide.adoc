@@ -33,11 +33,11 @@ Input readers are able to read values of a specific type.
 They are subclasses of link:javadoc/org/beryx/textio/InputReader.html[InputReader],
 which offers (via methods with names of the form _withXXX()_) a fluent interface for configuring various settings such as:
 
-- link:javadoc/org/beryx/textio/InputReader.html#withInputMasking-boolean-.html[input masking] - useful when reading sensitive data such as passwords.
+- link:javadoc/org/beryx/textio/InputReader.html#withInputMasking-boolean-[input masking] - useful when reading sensitive data such as passwords.
 - link:javadoc/org/beryx/textio/InputReader.html#withDefaultValue-T-[defaultValue] - the value to be used if the user pressed Enter.
-- link:javadoc/org/beryx/textio/InputReader.html#withPossibleValues-java.util.List-.html[possible values] - necessary if the value to be read must be chosen from a list of allowed values.
-- link:javadoc/org/beryx/textio/InputReader.html#withErrorMessageProvider-org.beryx.textio.InputReader.ErrorMessageProvider-.html[error messages] - used to provide custom error messages.
-- link:javadoc/org/beryx/textio/InputReader.html#withPropertyName-java.lang.String-.html[property name] - if configured, the name of the property to be read will appear in error messages.
+- link:javadoc/org/beryx/textio/InputReader.html#withPossibleValues-java.util.List-[possible values] - necessary if the value to be read must be chosen from a list of allowed values.
+- link:javadoc/org/beryx/textio/InputReader.html#withErrorMessageProvider-org.beryx.textio.InputReader.ErrorMessageProvider-[error messages] - used to provide custom error messages.
+- link:javadoc/org/beryx/textio/InputReader.html#withPropertyName-java.lang.String-[property name] - if configured, the name of the property to be read will appear in error messages.
 
 See the link:javadoc/org/beryx/textio/InputReader.html[javadoc] for more configuration methods.
 
