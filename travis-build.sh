@@ -7,7 +7,7 @@ if [ "${TRAVIS_PULL_REQUEST}" == "false" -a "${TRAVIS_BRANCH}" == "master" ]; th
     ./gradlew --no-daemon publishGhPages --rerun-tasks --info --stacktrace -PghPageType=init
   fi
   echo "##### -PghPageType=latest"
-  ./gradlew --no-daemon publishGhPages --rerun-tasks --info --stacktrace -PghPageType=latest
+  echo ##### Skipping ./gradlew --no-daemon publishGhPages --rerun-tasks --info --stacktrace -PghPageType=latest
   echo "##### -PghPageType=version"
   ./gradlew --no-daemon publishGhPages --rerun-tasks --info --stacktrace -PghPageType=version
 fi
