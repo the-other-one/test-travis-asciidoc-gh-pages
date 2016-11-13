@@ -141,7 +141,7 @@ task javadocJar(type: Jar, dependsOn: classes) {
     from javadoc
 }
 artifacts {
-    (System.getenv("TRAVISZZZZZ") == "true") ? archives(sourcesJar) : archives(sourcesJar, javadocJar)
+    (System.getenv("TRAVIS") == "true") ? archives(sourcesJar) : archives(sourcesJar, javadocJar)
 }
 
 publishing {

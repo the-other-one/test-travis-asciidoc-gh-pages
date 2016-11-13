@@ -47,4 +47,4 @@ terminal.println("\nUser " + user + " is " + age + " years old, " +
 
 Click on the image below to see the output of the above example in a Swing-based terminal.
 
-image::swing-terminal-thumb.gif[role="thumb" link="https://github.com/beryx/text-io/raw/master/doc/img/swing-terminal-animated.gif"]
+<a href="https://github.com/beryx/textio/raw/master/doc/img/swing-terminal-animated.gif"><img src="https://github.com/beryx/textio/raw/master/doc/img/swing-terminal-thumb.gif"></a>
