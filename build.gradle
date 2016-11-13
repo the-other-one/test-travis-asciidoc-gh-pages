@@ -215,8 +215,15 @@ asciidoctor {
              linkcss: true
 }
 
+
+// tasks["prepareGhPages"].dependsOn cleanGhPagesWorkDir
+
 githubPages {
   repoUri = 'https://github.com/sandboxx/test-travis-asciidoc-gh-pages.git'
+  def pgType = project.hasProperty('ghPageType') ? ghPageType : 'latest'
+  logger.warn("######### pgType = $pgType")
+  workingPath = "${project.buildDir}/ghpages-$pgType"
+  logger.warn("######### workingPath = $workingPath")
 
   credentials {
     username = System.getenv('GH_PAGES_ACCESS_TOKEN')
@@ -224,7 +231,6 @@ githubPages {
   }
 
   pages {
-    def pgType = project.hasProperty('ghPageType') ? ghPageType : 'latest'
     if(pgType == 'init') {
       from file("ghpages")
     } else {
